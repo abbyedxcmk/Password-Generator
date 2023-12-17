@@ -84,6 +84,7 @@ function getPasswordOptions() {
    }
 
 // Function for getting a random element from an array
+
 function getRandom(arr) {
     // Need a variable to hold the password as it's being generated
     // Need a variable to hold the index that's being generated
@@ -100,11 +101,15 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-
+let passwordOptions = getPasswordOptions();
+let password = '';
+for (let i = 0; i < passwordOptions.length; i++) {
+    password += getRandom(passwordOptions.possibleCharacters);
+}
+return password;
 }
 
 
-getPasswordOptions();
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
 
