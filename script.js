@@ -26,31 +26,30 @@ var upperCasedCharacters = [
     'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
 
-
-// You can store the generatedPassword as a string and concat each character OR
-// as an array and push each character, then join once you have enough characters
-
 // Function to prompt user for password options
-
 function getPasswordOptions() {
     let passwordLength;
+
+    // until the user gives a valid input, this loop will repeat itself
     while (true) {
         // Prompt for password length
         passwordLength = prompt('Enter the desired password length (8-128)');
+        // parsing to the integer, if possible, otherwise the result is null
         passwordLength = parseInt(passwordLength, 10);
-        // At least 8 characters, no more than 128 characters
-        // Conditional to check that the number that was entered is in range
-        // Prompts store data as strings, so need to parse into a number
-        // If the user's input is out of range, either return out of the function or call the function again
+
+        // check the valid input conditions
+        // if number - it has to be between 8 and 128
+        // if not number - invalid
         if (passwordLength < 8 || passwordLength > 128 || isNaN(passwordLength)) {
             alert("Invalid input. Length must be between 8 and 128.");
         } else {
+            // if the input is valid, break out of the loop
             break;
         }
     }
 
     // Confirm which character sets to use
-    // If the user answers false for all, either return out of the function or call the function again
+    // If the user answers false for all, they will be alerted and asked again
     let includeNumbers, includeSpecialCharacters, includeUpperCase, includeLowerCase;
     while (true) {
         includeNumbers = confirm("Include numbers?");
@@ -61,60 +60,50 @@ function getPasswordOptions() {
         if (!includeNumbers && !includeSpecialCharacters && !includeUpperCase && !includeLowerCase) {
             alert("At least one character type must be selected.");
         } else {
+            // if the input is valid, break out of the loop
             break;
         }
     }
 
-    // Once they select a character set
-    // Generate a random character for each selected character set
-    // Either push selected character sets to a mega-array of all selected characters
-    // OR you can keep the arrays separate and generate a random number to select the array and another to select the index
+    // add character sets that were confirmed to a new array - possibleCharacters
+    let possibleCharacters = [];
+    if (includeNumbers) possibleCharacters = possibleCharacters.concat(numericCharacters);
+    if (includeSpecialCharacters) possibleCharacters = possibleCharacters.concat(specialCharacters);
+    if (includeUpperCase) possibleCharacters = possibleCharacters.concat(upperCasedCharacters);
+    if (includeLowerCase) possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
 
-    // Once character sets are selected, move on to generating random characters
-
-   let possibleCharacters = []; 
-   if (includeNumbers) possibleCharacters =  possibleCharacters.concat(numericCharacters);
-   if (includeSpecialCharacters) possibleCharacters = possibleCharacters.concat(specialCharacters);
-   if (includeUpperCase) possibleCharacters = possibleCharacters.concat(upperCasedCharacters);
-   if (includeLowerCase) possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
-
-   return {
-    passwordLength, 
-    possibleCharacters,
-   }
+    // return the object with key-pair valus for passwordLength value and possibleCharactes array
+    return {
+        passwordLength,
+        possibleCharacters,
+    }
 }
 
 // Function for getting a random element from an array
 
 function getRandom(arr) {
-    
+    // get the random index of an array
     let randomIndex = Math.floor(Math.random() * arr.length);
+    // return the element on the random index in the array
     return arr[randomIndex];
-    // Need a variable to hold the password as it's being generated
-
-    // Need a variable to hold the index that's being generated
-
-    // For loop that loops the number of times that matches the length the user chose
-    // Generate a random number
-    // That number is the index for a character in the mega-array
-    // So then, mega-array[generated-index] is the actual character
-    // Add that character to the password
-
-    // Once we finish the for loop, return the generated password
-
 }
+
 
 // Function to generate password with user input
 function generatePassword() {
-let passwordOptions = getPasswordOptions();
-let password = '';
-console.table(passwordOptions);
-for (let i = 0; i < passwordOptions.passwordLength; i++) {
-    password += getRandom(passwordOptions.possibleCharacters);
+    // call getPasswordOptions function and give the output to passwordOptions variable
+    let passwordOptions = getPasswordOptions();
+
+    // declare password variable as an empty string and add a random character from
+    // the possible sets chosen by the user
+    let password = '';
+    for (let i = 0; i < passwordOptions.passwordLength; i++) {
+        password += getRandom(passwordOptions.possibleCharacters);
+
+    }
     
-}
-console.log(password);
-return password;
+    // return a generated password 
+    return password;
 }
 
 
