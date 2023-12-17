@@ -26,8 +26,6 @@ var upperCasedCharacters = [
     'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
 
-const charOptions = [];
-const generatedPassword = '';
 
 // You can store the generatedPassword as a string and concat each character OR
 // as an array and push each character, then join once you have enough characters
@@ -66,13 +64,24 @@ function getPasswordOptions() {
             break;
         }
     }
+
     // Once they select a character set
     // Generate a random character for each selected character set
     // Either push selected character sets to a mega-array of all selected characters
     // OR you can keep the arrays separate and generate a random number to select the array and another to select the index
 
     // Once character sets are selected, move on to generating random characters
-}
+
+   let possibleCharacters = []; 
+   if (includeNumbers) possibleCharacters =  possibleCharacters.concat(numericCharacters);
+   if (includeSpecialCharacters) possibleCharacters = possibleCharacters.concat(specialCharacters);
+   if (includeUpperCase) possibleCharacters = possibleCharacters.concat(upperCasedCharacters);
+   if (includeLowerCase) possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
+
+   return {
+    length, 
+    possibleCharacters,
+   }
 
 // Function for getting a random element from an array
 function getRandom(arr) {
@@ -88,6 +97,13 @@ function getRandom(arr) {
     // Once we finish the for loop, return the generated password
 
 }
+
+// Function to generate password with user input
+function generatePassword() {
+
+}
+
+
 getPasswordOptions();
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
