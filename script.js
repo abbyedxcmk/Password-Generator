@@ -50,11 +50,23 @@ function getPasswordOptions() {
             break;
         }
     }
-   
+
     // Confirm which character sets to use
     // If the user answers false for all, either return out of the function or call the function again
+    let includeNumbers, includeSpecialCharacters, includeUpperCase, includeLowerCase;
+    while (true) {
+        includeNumbers = confirm("Include numbers?");
+        includeSpecialCharacters = confirm("Include special characters?");
+        includeUpperCase = confirm("Include uppercase letters?");
+        includeLowerCase = confirm("Include lowercase letters?");
 
-    // Once they select a character set:
+        if (!includeNumbers && !includeSpecialCharacters && !includeUpperCase && !includeLowerCase) {
+            alert("At least one character type must be selected.");
+        } else {
+            break;
+        }
+    }
+    // Once they select a character set
     // Generate a random character for each selected character set
     // Either push selected character sets to a mega-array of all selected characters
     // OR you can keep the arrays separate and generate a random number to select the array and another to select the index
