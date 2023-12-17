@@ -79,14 +79,19 @@ function getPasswordOptions() {
    if (includeLowerCase) possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
 
    return {
-    length, 
+    passwordLength, 
     possibleCharacters,
    }
+}
 
 // Function for getting a random element from an array
 
 function getRandom(arr) {
+    
+    let randomIndex = Math.floor(Math.random() * arr.length);
+    return arr[randomIndex];
     // Need a variable to hold the password as it's being generated
+
     // Need a variable to hold the index that's being generated
 
     // For loop that loops the number of times that matches the length the user chose
@@ -103,9 +108,12 @@ function getRandom(arr) {
 function generatePassword() {
 let passwordOptions = getPasswordOptions();
 let password = '';
-for (let i = 0; i < passwordOptions.length; i++) {
+console.table(passwordOptions);
+for (let i = 0; i < passwordOptions.passwordLength; i++) {
     password += getRandom(passwordOptions.possibleCharacters);
+    
 }
+console.log(password);
 return password;
 }
 
@@ -122,3 +130,4 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
+
